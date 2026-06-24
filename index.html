@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Awareness Training | Rossari Biotech</title>
+
+  <!-- Vercel Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════ */
+    :root {
+      --navy:        #0B1F3A;
+      --navy-mid:    #163358;
+      --white:       #FFFFFF;
+      --slate-bg:    #EEF2F7;
+      --slate-border:#C8D5E4;
+      --text:        #0F1E30;
+      --text-muted:  #4A5E72;
+      --orange:      #E8630A;
+      --orange-hover:#C4510A;
+      --green:       #14703F;
+      --green-bg:    #E6F4ED;
+      --red:         #B52B20;
+      --red-bg:      #FDECEA;
+      --radius:      12px;
+      --shadow:      0 4px 28px rgba(11,31,58,0.11);
+      --transition:  0.22s ease;
+
+      /* Font scale — increased throughout */
+      --fs-xs:   13px;
+      --fs-sm:   15px;
+      --fs-base: 17px;
+      --fs-md:   19px;
+      --fs-lg:   22px;
+      --fs-xl:   26px;
+      --fs-hero: clamp(26px, 4.5vw, 34px);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   Helvetica, Arial, sans-serif;
+      font-size: var(--fs-base);
+      line-height: 1.65;
+      background: var(--slate-bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
+    .site-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--orange) 0%, #c44d00 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 20px;
+      color: white;
+      flex-shrink: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .logo-sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: #8AAACB;
+      display: block;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .header-badge {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      background: var(--orange);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    /* ═══════════════════════════════════════════
+       MAIN WRAPPER
+    ═══════════════════════════════════════════ */
+    main {
+      flex: 1;
+      padding: 36px 16px 70px;
+    }
+
+    .screen {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .hidden { display: none !important; }
+
+    /* ═══════════════════════════════════════════
+       CARD
+    ═══════════════════════════════════════════ */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--slate-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px;
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: var(--fs-lg);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-title .icon { font-size: 24px; line-height: 1; }
+
+    /* ═══════════════════════════════════════════
+       SIMULATION BANNER
+    ═══════════════════════════════════════════ */
+    .sim-banner {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sim-banner::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: rgba(232,99,10,0.12);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .sim-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: 60px;
+      width: 160px; height: 160px;
+      background: rgba(232,99,10,0.07);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .sim-banner .eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .sim-banner h1 {
+      font-size: var(--fs-hero);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .sim-banner p {
+      font-size: var(--fs-base);
+      color: #9BBBD6;
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    /* ═══════════════════════════════════════════
+       EMAIL COMPARISON BOX
+    ═══════════════════════════════════════════ */
+    .email-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .email-box {
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-size: var(--fs-sm);
+    }
+
+    .email-box.real {
+      background: var(--green-bg);
+      border: 2px solid var(--green);
+    }
+
+    .email-box.fake {
+      background: var(--red-bg);
+      border: 2px solid var(--red);
+    }
+
+    .email-box .eb-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .email-box.real .eb-label { color: var(--green); }
+    .email-box.fake .eb-label { color: var(--red); }
+
+    .email-box .eb-addr {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .email-box .eb-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ═══════════════════════════════════════════
+       RED FLAGS LIST
+    ═══════════════════════════════════════════ */
+    .red-flags-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .red-flags-list li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: #FFF5F0;
+      border: 1px solid #F5C0A0;
+      border-left: 5px solid var(--orange);
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: var(--fs-sm);
+      line-height: 1.65;
+    }
+
+    .red-flags-list li .flag-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+
+    .red-flags-list li strong {
+      display: block;
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 4px;
+    }
+
+    /* ═══════════════════════════════════════════
+       COMMON RISKS GRID
+    ═══════════════════════════════════════════ */
+    .risks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .risk-item {
+      background: var(--slate-bg);
+      border: 1px solid var(--slate-border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+
+    .risk-item .risk-icon { font-size: 28px; display: block; margin-bottom: 10px; }
+
+    .risk-item .risk-title {
+      font-size: var(--fs-sm);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .risk-item .risk-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--red-bg);
+      color: var(--red);
+      border-radius: 4px;
+      padding: 2px 7px;
+      margin-bottom: 8px;
+    }
+
+    .risk-item p {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       YOUR ROLE LIST
+    ═══════════════════════════════════════════ */
+    .role-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .role-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #F0F6FF;
+      border: 1px solid #C5D9F0;
+      border-left: 5px solid var(--navy);
+      border-radius: 10px;
+      padding: 15px 18px;
+      font-size: var(--fs-sm);
+      line-height: 1.65;
+    }
+
+    .role-list li .role-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+
+    .role-list li strong {
+      display: block;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+
+    /* ═══════════════════════════════════════════
+       REPORTING LOOP
+    ═══════════════════════════════════════════ */
+    .loop-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .loop-step {
+      text-align: center;
+      background: var(--slate-bg);
+      border: 1px solid var(--slate-border);
+      border-radius: 10px;
+      padding: 20px 14px;
+    }
+
+    .loop-step .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+    }
+
+    .loop-step .step-emoji { font-size: 28px; display: block; margin-bottom: 8px; }
+
+    .loop-step .step-label {
+      font-size: var(--fs-sm);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .loop-step .step-desc {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .reporting-contacts {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .contact-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--slate-bg);
+      border: 1.5px dashed var(--slate-border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+
+    .contact-chip .chip-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-right: 2px;
+    }
+
+    /* ═══════════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════════ */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      padding: 16px 32px;
+      font-size: var(--fs-md);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary:hover { background: var(--orange-hover); transform: translateY(-2px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 10px;
+      padding: 13px 26px;
+      font-size: var(--fs-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover { background: var(--slate-bg); }
+
+    /* ═══════════════════════════════════════════
+       QUIZ SCREEN
+    ═══════════════════════════════════════════ */
+    .progress-bar-wrap {
+      background: var(--slate-bg);
+      border: 1px solid var(--slate-border);
+      border-radius: 30px;
+      height: 12px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy), var(--orange));
+      border-radius: 30px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .progress-label {
+      font-size: var(--fs-sm);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-align: right;
+      margin-bottom: 28px;
+    }
+
+    .question-block {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--slate-border);
+    }
+
+    .question-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .question-num {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: var(--fs-md);
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--slate-bg);
+      border: 2px solid var(--slate-border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: var(--fs-base);
+      color: var(--text);
+      transition: border-color var(--transition), background var(--transition);
+      line-height: 1.5;
+    }
+
+    .option-label:hover { border-color: var(--navy); background: #E5EDF6; }
+
+    .option-label input[type="radio"] {
+      accent-color: var(--navy);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .option-label:has(input:checked) {
+      border-color: var(--navy);
+      background: #D8E8F5;
+    }
+
+    .quiz-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid var(--slate-border);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESULTS SCREEN
+    ═══════════════════════════════════════════ */
+    .score-hero { text-align: center; padding: 32px 20px 24px; }
+
+    .score-ring {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      border: 10px solid var(--slate-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      transition: border-color 0.5s ease;
+      gap: 2px;
+    }
+
+    .score-ring .score-number {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--navy);
+    }
+
+    .score-ring .score-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .score-ring.pass { border-color: var(--green); }
+    .score-ring.pass .score-number { color: var(--green); }
+    .score-ring.fail { border-color: var(--red); }
+    .score-ring.fail .score-number { color: var(--red); }
+
+    .score-verdict {
+      font-size: var(--fs-xl);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .score-verdict.pass { color: var(--green); }
+    .score-verdict.fail { color: var(--red); }
+
+    .score-subtitle {
+      font-size: var(--fs-base);
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Scoreboard */
+    .scoreboard { margin-top: 24px; }
+
+    .scoreboard-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 10px;
+    }
+
+    .benchmark-bar-wrap {
+      background: var(--slate-bg);
+      border-radius: 30px;
+      height: 16px;
+      overflow: visible;
+      margin: 0 0 6px;
+      position: relative;
+    }
+
+    .benchmark-bar-fill {
+      height: 100%;
+      border-radius: 30px;
+      background: var(--navy);
+      transition: width 0.9s ease 0.3s;
+      width: 0%;
+    }
+
+    .benchmark-marker {
+      position: absolute;
+      top: -6px;
+      height: 28px;
+      width: 3px;
+      background: var(--orange);
+      border-radius: 2px;
+    }
+
+    .benchmark-marker::after {
+      content: 'Pass 70%';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--orange);
+      white-space: nowrap;
+    }
+
+    .benchmark-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    /* Answer review */
+    .answer-review-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .answer-row {
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: var(--fs-sm);
+      border-left: 5px solid transparent;
+      line-height: 1.6;
+    }
+
+    .answer-row.correct { background: var(--green-bg); border-left-color: var(--green); }
+    .answer-row.incorrect { background: var(--red-bg); border-left-color: var(--red); }
+
+    .answer-row .q-text {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: var(--fs-base);
+      margin-bottom: 6px;
+    }
+
+    .answer-row .q-meta { font-size: var(--fs-xs); color: var(--text-muted); }
+    .answer-row .q-meta .correct-ans { color: var(--green); font-weight: 700; }
+    .answer-row .q-explain { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 6px; font-style: italic; }
+
+    /* Key takeaways */
+    .takeaway-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+
+    .takeaway-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: var(--fs-base);
+      line-height: 1.65;
+    }
+
+    .takeaway-list li .t-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+
+    .policy-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: var(--fs-base);
+      text-decoration: underline;
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════
+       EMPLOYEE ID BANNER
+    ═══════════════════════════════════════════ */
+    .emp-banner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #EEF5FF;
+      border: 1px solid #C0D6F5;
+      border-left: 5px solid var(--navy);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      font-size: var(--fs-sm);
+    }
+    .emp-banner .emp-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-weight: 800;
+      font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .emp-banner .emp-info strong { color: var(--navy); font-size: var(--fs-base); display: block; }
+    .emp-banner .emp-info span   { color: var(--text-muted); font-size: var(--fs-xs); }
+    .emp-banner.unknown {
+      background: #FFF8F0;
+      border-color: #F5C0A0;
+      border-left-color: var(--orange);
+    }
+
+    .site-footer {
+      background: var(--navy);
+      color: #7A9BBC;
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .site-footer a { color: #7A9BBC; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 640px) {
+      .card { padding: 22px 18px; }
+      .sim-banner { padding: 22px 20px; }
+      .email-compare { grid-template-columns: 1fr; }
+      .risks-grid { grid-template-columns: 1fr; }
+      .loop-steps { grid-template-columns: 1fr 1fr; }
+      .header-badge { display: none; }
+      .score-ring { width: 120px; height: 120px; }
+      .score-ring .score-number { font-size: 32px; }
+    }
+
+    /* ═══════════════════════════════════════════
+       LOGIN SCREEN
+    ═══════════════════════════════════════════ */
+    #screen-login {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .login-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      width: 100%;
+      max-width: 420px;
+      overflow: hidden;
+    }
+    .login-header {
+      background: #7B1416;
+      padding: 28px 32px 24px;
+      text-align: center;
+    }
+    .login-logo {
+      font-size: 28px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 2px;
+      font-family: Georgia, serif;
+    }
+    .login-logo span { color: #ffcccc; }
+    .login-tagline {
+      color: #ffaaaa;
+      font-size: 11px;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    .login-portal-label {
+      background: #5a0f11;
+      color: #ffcccc;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 7px;
+    }
+    .login-body { padding: 32px; }
+    .login-body h2 {
+      font-size: 17px;
+      color: #222;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .login-body p {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 24px;
+    }
+    .login-field { margin-bottom: 16px; }
+    .login-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .login-field input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #222;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .login-field input:focus { border-color: #7B1416; }
+    .login-field input.error { border-color: #e53e3e; }
+    .login-error-msg {
+      color: #e53e3e;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      background: #7B1416;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+    .login-btn:hover { background: #5a0f11; }
+    .login-footer {
+      border-top: 1px solid #f0f0f0;
+      padding: 14px 32px;
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+    }
+    .login-security-note {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+  
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       LOGIN SCREEN — shown first, looks like internal portal
+  ═══════════════════════════════════════════ -->
+  <section id="screen-login" aria-label="Employee Portal Login">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">ROSS<span>ARI</span></div>
+        <div class="login-tagline">making you more competitive</div>
+      </div>
+      <div class="login-portal-label">🔒 Employee Self-Service Portal</div>
+      <div class="login-body">
+        <h2>Sign in to your account</h2>
+        <p>Use your Rossari employee credentials to access HR services.</p>
+
+        <div class="login-security-note">
+          🛡️ Secure connection — your information is encrypted
+        </div>
+
+        <div class="login-field">
+          <label for="login-name">Full Name</label>
+          <input type="text" id="login-name" placeholder="e.g. Allison Suvarna" autocomplete="name" />
+          <div class="login-error-msg" id="err-name">Please enter your full name</div>
+        </div>
+
+        <div class="login-field">
+          <label for="login-email">Work Email Address</label>
+          <input type="email" id="login-email" placeholder="e.g. allison.suvarna@rossari.com" autocomplete="email" />
+          <div class="login-error-msg" id="err-email">Please enter a valid Rossari email</div>
+        </div>
+
+        <button class="login-btn" id="btn-login">Sign In →</button>
+      </div>
+      <div class="login-footer">
+        © 2026 Rossari Biotech Ltd. · Corporate HR Portal · For assistance contact IT Helpdesk
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-mark" aria-hidden="true">RB</div>
+        <div>
+          <span class="logo-text">Rossari Biotech</span>
+          <span class="logo-sub">Information Security</span>
+        </div>
+      </div>
+      <span class="header-badge">Security Awareness Training</span>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN
+  ═══════════════════════════════════════════ -->
+  <main role="main">
+
+    <!-- ─────────────────────────────────────
+         SCREEN 1 — LANDING / OVERVIEW
+    ──────────────────────────────────────── -->
+    <section id="screen-landing" class="screen" aria-label="Training overview">
+
+      <!-- Employee Identity Banner (populated from URL params) -->
+      <div id="emp-banner" class="emp-banner hidden" aria-live="polite"></div>
+
+      <!-- Simulation Alert Banner -->
+      <div class="sim-banner" role="alert">
+        <div class="eyebrow">🔔 Phishing Simulation — Rossari Biotech IT Security</div>
+        <h1>You received a simulated phishing email.</h1>
+        <p>
+          This was a controlled security test run by the Rossari Biotech IT team.
+          No real harm has been done — this is your opportunity to learn how to
+          identify and report real phishing threats before they cause damage.
+        </p>
+      </div>
+
+      <!-- Email comparison -->
+      <div class="card">
+        <h2 class="card-title"><span class="icon">📬</span> Real vs. Fake: Spot the Difference</h2>
+        <div class="email-compare">
+          <div class="email-box real">
+            <div class="eb-label">✅ Legitimate HR Email</div>
+            <div class="eb-addr">corphr@rossari.com</div>
+            <div class="eb-note">Official Rossari Biotech domain — always ends in @rossari.com</div>
+          </div>
+          <div class="email-box fake">
+            <div class="eb-label">❌ Phishing Email (Fake)</div>
+            <div class="eb-addr">corphr@gmail.com</div>
+            <div class="eb-note">A free Gmail address — Rossari HR will <strong>never</strong> contact you from Gmail</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Red Flags -->
+      <div class="card">
+        <h2 class="card-title"><span class="icon">🚩</span> Red Flags in That Email</h2>
+        <p style="font-size:var(--fs-sm);color:var(--text-muted);margin-bottom:18px;">
+          Here is exactly why that HR reward offer should have raised suspicion immediately:
+        </p>
+        <ul class="red-flags-list" role="list">
+          <li>
+            <span class="flag-icon" aria-hidden="true">⚠️</span>
+            <div>
+              <strong>Fake Sender Domain</strong>
+              The email came from <code>corphr@gmail.com</code> — a free public Gmail account.
+              Rossari Biotech's HR department exclusively uses <code>@rossari.com</code> addresses.
+              Any HR communication from a Gmail, Yahoo, or other free email provider is fraudulent.
+            </div>
+          </li>
+          <li>
+            <span class="flag-icon" aria-hidden="true">⚠️</span>
+            <div>
+              <strong>Urgency &amp; Pressure Tactics</strong>
+              The message created artificial urgency ("Claim your reward within 24 hours!").
+              This is a classic manipulation technique designed to prevent you from thinking
+              critically and verifying the email's authenticity before acting.
+            </div>
+          </li>
+          <li>
+            <span class="flag-icon" aria-hidden="true">⚠️</span>
+            <div>
+              <strong>Request to Click a Link &amp; Enter Credentials</strong>
+              Legitimate Rossari Biotech HR systems will <em>never</em> ask you to verify your identity
+              by clicking an unsolicited email link. Any email directing you to log in via an
+              unexpected link — especially from a non-company address — is a phishing attack.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Common Risks -->
+      <div class="card">
+        <h2 class="card-title"><span class="icon">⚡</span> Common Risks You Might Encounter</h2>
+        <p style="font-size:var(--fs-sm);color:var(--text-muted);margin-bottom:20px;">
+          Understanding these threats is the first step to defending against them:
+        </p>
+        <div class="risks-grid">
+          <div class="risk-item">
+            <span class="risk-icon" aria-hidden="true">🎣</span>
+            <div class="risk-badge">High Risk</div>
+            <div class="risk-title">Phishing</div>
+            <p>
+              Attackers send fake emails to steal your passwords or financial information.
+              You must be extra cautious with any unexpected email asking for sensitive data
+              or directing you to click a link.
+            </p>
+          </div>
+          <div class="risk-item">
+            <span class="risk-icon" aria-hidden="true">🦠</span>
+            <div class="risk-badge">High Risk</div>
+            <div class="risk-title">Malware &amp; Ransomware</div>
+            <p>
+              Malicious programs that can corrupt or steal your data and crash company systems.
+              They enter your computer through unsafe links, email attachments, or unauthorised
+              software downloads.
+            </p>
+          </div>
+          <div class="risk-item">
+            <span class="risk-icon" aria-hidden="true">🤦</span>
+            <div class="risk-badge">Medium Risk</div>
+            <div class="risk-title">Human Error</div>
+            <p>
+              Accidental mistakes — such as opening an infected email or deleting critical data —
+              can lead to data breaches that disrupt company operations and harm Rossari Biotech's
+              reputation.
+            </p>
+          </div>
+          <div class="risk-item">
+            <span class="risk-icon" aria-hidden="true">🔓</span>
+            <div class="risk-badge">Medium Risk</div>
+            <div class="risk-title">Weak Access Controls</div>
+            <p>
+              Weak or shared passwords can expose sensitive company information, leading to
+              financial loss and reputational damage. Use strong, unique passwords and enable
+              MFA on all accounts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Your Role -->
+      <div class="card">
+        <h2 class="card-title"><span class="icon">🛡️</span> Your Role in Staying Safe</h2>
+        <p style="font-size:var(--fs-sm);color:var(--text-muted);margin-bottom:18px;">
+          Every employee at Rossari Biotech is a critical part of our cyber defence. Here is what is expected of you:
+        </p>
+        <ul class="role-list" role="list">
+          <li>
+            <span class="role-icon" aria-hidden="true">👁️</span>
+            <div>
+              <strong>Stay Vigilant</strong>
+              You are expected to remain alert at all times and look for signs of suspicious
+              activity in emails, messages, and any digital communication you receive.
+            </div>
+          </li>
+          <li>
+            <span class="role-icon" aria-hidden="true">🔍</span>
+            <div>
+              <strong>Verify Before You Click</strong>
+              Before clicking any link in an email, always verify that it is authentic.
+              Hover over links to check the real destination URL and confirm the sender's
+              full email address matches an official Rossari Biotech domain.
+            </div>
+          </li>
+          <li>
+            <span class="role-icon" aria-hidden="true">📣</span>
+            <div>
+              <strong>Report Suspicious Activity</strong>
+              If you notice anything unusual, you must report it to the IT department
+              immediately — do not wait. Early reporting can stop an attack from spreading
+              across the entire organisation.
+            </div>
+          </li>
+          <li>
+            <span class="role-icon" aria-hidden="true">📋</span>
+            <div>
+              <strong>Follow IT Policies</strong>
+              You must strictly adhere to all IT security policies, including changing your
+              passwords at the intervals required by company applications and not sharing
+              credentials with colleagues.
+            </div>
+          </li>
+          <li>
+            <span class="role-icon" aria-hidden="true">🎓</span>
+            <div>
+              <strong>Participate in Training</strong>
+              You are required to attend regular IT security awareness training sessions
+              to stay updated on emerging threats and how to handle them effectively.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Security Reporting Loop -->
+      <div class="card">
+        <h2 class="card-title"><span class="icon">🔁</span> The Security Reporting Loop</h2>
+        <p style="font-size:var(--fs-sm);color:var(--text-muted);">
+          When you receive a suspicious email, follow these four steps — every time, without exception:
+        </p>
+        <div class="loop-steps" role="list">
+          <div class="loop-step" role="listitem">
+            <div class="step-num" aria-hidden="true">1</div>
+            <span class="step-emoji" aria-hidden="true">🛑</span>
+            <div class="step-label">Stop</div>
+            <div class="step-desc">Do not click any links or open any attachments.</div>
+          </div>
+          <div class="loop-step" role="listitem">
+            <div class="step-num" aria-hidden="true">2</div>
+            <span class="step-emoji" aria-hidden="true">🔍</span>
+            <div class="step-label">Inspect</div>
+            <div class="step-desc">Hover over links and check the sender's full email address.</div>
+          </div>
+          <div class="loop-step" role="listitem">
+            <div class="step-num" aria-hidden="true">3</div>
+            <span class="step-emoji" aria-hidden="true">📣</span>
+            <div class="step-label">Report</div>
+            <div class="step-desc">Use the "Report Phishing" button or email IT immediately.</div>
+          </div>
+          <div class="loop-step" role="listitem">
+            <div class="step-num" aria-hidden="true">4</div>
+            <span class="step-emoji" aria-hidden="true">🗑️</span>
+            <div class="step-label">Delete</div>
+            <div class="step-desc">Delete the email from your inbox and empty the trash.</div>
+          </div>
+        </div>
+
+        <p style="font-size:var(--fs-sm);color:var(--text-muted);margin-top:22px;font-weight:600;">
+          Official Rossari Biotech reporting contacts:
+        </p>
+        <div class="reporting-contacts">
+          <div class="contact-chip">
+            <span class="chip-label">IT Helpdesk</span>
+            📧 it-helpdesk@rossari.com
+          </div>
+          <div class="contact-chip">
+            <span class="chip-label">HR (Verified)</span>
+            📧 corphr@rossari.com
+          </div>
+        </div>
+      </div>
+
+      <!-- Start Quiz CTA -->
+      <div class="card" style="text-align:center;padding:36px;">
+        <p style="font-size:var(--fs-lg);font-weight:700;color:var(--navy);margin-bottom:10px;">
+          Ready to test your knowledge?
+        </p>
+        <p style="font-size:var(--fs-base);color:var(--text-muted);margin-bottom:24px;">
+          Complete the 10-question quiz to demonstrate your security awareness.
+          You need <strong>7 or more correct answers</strong> to pass (70%).
+        </p>
+        <button class="btn-primary" id="btn-start-quiz">
+          Start 10-Question Quiz →
+        </button>
+      </div>
+
+    </section><!-- /screen-landing -->
+
+
+    <!-- ─────────────────────────────────────
+         SCREEN 2 — QUIZ
+    ──────────────────────────────────────── -->
+    <section id="screen-quiz" class="screen hidden" aria-label="Security awareness quiz">
+
+      <div class="card">
+        <h2 class="card-title"><span class="icon">🧠</span> Security Awareness Quiz</h2>
+
+        <div class="progress-bar-wrap"
+             role="progressbar"
+             aria-valuemin="0"
+             aria-valuemax="10"
+             aria-valuenow="0"
+             id="quiz-progress-bar-aria">
+          <div class="progress-bar-fill" id="quiz-progress-fill"></div>
+        </div>
+        <div class="progress-label"><span id="progress-text">0 of 10 answered</span></div>
+
+        <div id="quiz-questions-container" role="group" aria-label="Quiz questions"></div>
+
+        <div class="quiz-footer">
+          <button class="btn-primary" id="btn-submit-quiz">Submit Quiz</button>
+        </div>
+      </div>
+
+    </section><!-- /screen-quiz -->
+
+
+    <!-- ─────────────────────────────────────
+         SCREEN 3 — RESULTS
+    ──────────────────────────────────────── -->
+    <section id="screen-results" class="screen hidden" aria-label="Quiz results">
+
+      <!-- Score hero -->
+      <div class="card">
+        <div class="score-hero">
+          <div class="score-ring" id="score-ring" aria-live="polite">
+            <span class="score-number" id="score-display">–</span>
+            <span class="score-label" id="score-out-of">out of 10</span>
+          </div>
+          <div class="score-verdict" id="score-verdict">–</div>
+          <div class="score-subtitle" id="score-subtitle">–</div>
+        </div>
+
+        <!-- Scoreboard bar -->
+        <div class="scoreboard">
+          <div class="scoreboard-title">Your score vs. passing benchmark (70%)</div>
+          <div class="benchmark-bar-wrap">
+            <div class="benchmark-bar-fill" id="benchmark-fill"></div>
+            <div class="benchmark-marker" style="left:70%;" aria-hidden="true"></div>
+          </div>
+          <div class="benchmark-labels">
+            <span>0 / 10</span>
+            <span>10 / 10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Answer review -->
+      <div class="card">
+        <h2 class="card-title"><span class="icon">📋</span> Your Answer Review</h2>
+        <div class="answer-review-list" id="answer-review-list"></div>
+      </div>
+
+      <!-- Key Takeaways -->
+      <div class="card">
+        <h2 class="card-title"><span class="icon">💡</span> Key Takeaways</h2>
+        <ul class="takeaway-list" role="list">
+          <li>
+            <span class="t-icon" aria-hidden="true">🔗</span>
+            <div>
+              <strong>Hover before you click.</strong>
+              Always hover over links to preview the destination URL. If the domain looks
+              unfamiliar, misspelled, or uses a URL shortener — do not click it.
+            </div>
+          </li>
+          <li>
+            <span class="t-icon" aria-hidden="true">📧</span>
+            <div>
+              <strong>Verify the sender's full email address.</strong>
+              Display names are trivially spoofed. Always check the actual address — Rossari
+              Biotech communications come only from <code>@rossari.com</code> addresses.
+            </div>
+          </li>
+          <li>
+            <span class="t-icon" aria-hidden="true">🔑</span>
+            <div>
+              <strong>Enable Multi-Factor Authentication (MFA).</strong>
+              Even if your password is compromised, MFA provides a critical second layer of
+              defence. Enable it on all business applications immediately.
+            </div>
+          </li>
+          <li>
+            <span class="t-icon" aria-hidden="true">📣</span>
+            <div>
+              <strong>Report — don't just delete.</strong>
+              Reporting helps IT block the sender for everyone. Use the "Report Phishing"
+              button in your email client, or forward suspicious emails to
+              <strong>it-helpdesk@rossari.com</strong>.
+            </div>
+          </li>
+          <li>
+            <span class="t-icon" aria-hidden="true">⏸️</span>
+            <div>
+              <strong>Pause under pressure.</strong>
+              Any email that demands urgency ("Act now or lose access!") is trying to bypass
+              your critical thinking. That feeling of urgency is itself a red flag — slow down
+              and verify before acting.
+            </div>
+          </li>
+        </ul>
+
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--slate-border);">
+          <p style="font-size:var(--fs-sm);color:var(--text-muted);margin-bottom:12px;font-weight:600;">
+            Read the full Rossari Biotech Information Security Policy:
+          </p>
+          <a href="https://www.rossari.com/wp-content/uploads/2026/04/Information-Security-Policy-V2.pdf"
+             class="policy-link"
+             target="_blank"
+             rel="noopener noreferrer">
+            📄 Information Security Policy V2 ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:6px;">
+        <button class="btn-secondary" id="btn-retake">↩ Retake Quiz</button>
+        <button class="btn-secondary" id="btn-back-landing">← Back to Overview</button>
+      </div>
+
+    </section><!-- /screen-results -->
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <p>
+      © <span id="footer-year"></span> Rossari Biotech Ltd · IT Security Department ·
+      <a href="https://www.rossari.com/wp-content/uploads/2026/04/Information-Security-Policy-V2.pdf"
+         target="_blank" rel="noopener noreferrer">Information Security Policy</a>
+      &nbsp;·&nbsp; Internal training — not for external distribution
+    </p>
+    <p style="margin-top:4px;">
+      Questions? Contact IT: <a href="mailto:it-helpdesk@rossari.com">it-helpdesk@rossari.com</a>
+    </p>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════ -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION A: QUIZ DATA
+       To edit questions: update this array only.
+       Each object properties:
+         id          — unique integer
+         category    — topic label shown above question
+         question    — question text
+         options     — array of answer strings (4 options)
+         correct     — index (0-based) of the correct option
+         explanation — shown in the answer review after submission
+    ───────────────────────────────────────────────────────────────── */
+    const QUIZ_DATA = [
+      {
+        id: 1,
+        category: "Phishing Awareness",
+        question: "You receive an email from 'corphr@gmail.com' offering you a company bonus. Rossari Biotech's official HR email is corphr@rossari.com. What should you do?",
+        options: [
+          "Click the link to find out more about the bonus.",
+          "Report the email to IT at it-helpdesk@rossari.com and delete it.",
+          "Reply to the sender asking if the email is genuine.",
+          "Forward it to colleagues to see if they received it too."
+        ],
+        correct: 1,
+        explanation: "Rossari Biotech HR uses @rossari.com — never a free Gmail address. This is a lookalike phishing email. Report it to IT immediately and do not engage."
+      },
+      {
+        id: 2,
+        category: "Phishing Awareness",
+        question: "Which is the strongest sign that an email is a phishing attempt?",
+        options: [
+          "The email uses your first name and job title.",
+          "The email contains the Rossari Biotech logo.",
+          "The email creates extreme urgency and asks you to click a link to 'verify your account immediately'.",
+          "The email arrived on a Saturday morning."
+        ],
+        correct: 2,
+        explanation: "Artificial urgency + a suspicious link is the hallmark of phishing. Logos and names are trivially copied by attackers. Time of arrival is irrelevant."
+      },
+      {
+        id: 3,
+        category: "Phishing Awareness",
+        question: "What is 'spear phishing'?",
+        options: [
+          "A phishing attack sent to thousands of random people at once.",
+          "A highly targeted phishing attack using personal details to appear credible to a specific victim.",
+          "Phishing carried out over a phone call.",
+          "An attack that only targets senior management."
+        ],
+        correct: 1,
+        explanation: "Spear phishing is personalised. Attackers research victims via LinkedIn, company websites, and social media to craft convincing, targeted messages."
+      },
+      {
+        id: 4,
+        category: "Password Security",
+        question: "Which password strategy is most secure for a corporate environment?",
+        options: [
+          "Using one strong password across all work systems so it's easier to remember.",
+          "A unique, randomly generated password for each account, stored in an approved company password manager.",
+          "A short password with special characters like 'P@ss1!'",
+          "Writing passwords in a notebook locked in your desk drawer."
+        ],
+        correct: 1,
+        explanation: "Password reuse is extremely dangerous. If one system is compromised, all accounts sharing that password are at risk. A password manager solves this securely."
+      },
+      {
+        id: 5,
+        category: "Password Security",
+        question: "A colleague urgently asks for your Rossari Biotech login password to complete a critical task while you are on leave. What should you do?",
+        options: [
+          "Share it via WhatsApp — it's a trusted colleague.",
+          "Write it down and leave it in a sealed envelope on their desk.",
+          "Refuse. Sharing corporate credentials is a violation of the Information Security Policy regardless of the reason.",
+          "Email it to them from your personal email as a workaround."
+        ],
+        correct: 2,
+        explanation: "Sharing your credentials is always a policy violation. IT can grant temporary access through proper, auditable channels. Credential sharing enables insider threats and account compromise."
+      },
+      {
+        id: 6,
+        category: "Password Security",
+        question: "What is Multi-Factor Authentication (MFA)?",
+        options: [
+          "Having multiple different passwords for the same account.",
+          "A security process requiring two or more verification methods — such as a password plus a one-time code sent to your phone.",
+          "Software that checks whether your password meets complexity requirements.",
+          "Logging into the same account from multiple devices at the same time."
+        ],
+        correct: 1,
+        explanation: "MFA means an attacker who steals your password still cannot log in without your second factor (e.g. your phone). Always enable MFA on every business system that supports it."
+      },
+      {
+        id: 7,
+        category: "Social Engineering",
+        question: "You receive a call from someone claiming to be from Rossari Biotech IT Support. They ask you to read out a one-time code that just appeared on your phone. What should you do?",
+        options: [
+          "Read it out — IT support staff are trusted employees.",
+          "Hang up immediately, do not share the code, and call it-helpdesk@rossari.com on the official number to verify.",
+          "Ask them to send an email request first.",
+          "Ask your manager for permission before responding."
+        ],
+        correct: 1,
+        explanation: "This is a real-time MFA bypass attack. Legitimate IT staff will NEVER ask for your one-time code. Hang up and call IT on the verified official number to confirm."
+      },
+      {
+        id: 8,
+        category: "Social Engineering",
+        question: "What is 'pretexting' in the context of a cyber attack?",
+        options: [
+          "Sending a malicious text (SMS) message with a dangerous link.",
+          "Creating a fabricated, believable scenario to manipulate someone into sharing sensitive information or performing an action.",
+          "Using pre-written email templates to launch phishing attacks at scale.",
+          "An attack that happens before a scheduled security audit."
+        ],
+        correct: 1,
+        explanation: "Pretexting is inventing a convincing story — e.g. 'I'm from IT, we need your credentials urgently to prevent a server outage.' Always verify the identity of anyone making unusual requests."
+      },
+      {
+        id: 9,
+        category: "Reporting & Safe Behaviour",
+        question: "You receive a suspicious email but you are not 100% certain it's a phishing attempt. What is the correct action?",
+        options: [
+          "Open the link in a private browsing window to check if it looks legitimate.",
+          "Delete it without reporting so IT does not get flooded with minor queries.",
+          "Use the 'Report Phishing' button in your email client, or forward it to it-helpdesk@rossari.com for IT to investigate safely.",
+          "Reply to the sender asking if the email is genuine."
+        ],
+        correct: 2,
+        explanation: "When in doubt, report it. IT Security can safely analyse the email without putting you or the company at risk. Replying to a phishing email confirms your address is active and invites more attacks."
+      },
+      {
+        id: 10,
+        category: "Reporting & Safe Behaviour",
+        question: "Before clicking a link in any email, what is the safest verification step you can take?",
+        options: [
+          "Check whether the email looks professionally designed and branded.",
+          "Hover over the link with your mouse cursor to preview the destination URL in the browser's status bar.",
+          "Click quickly and close the tab immediately if the page looks suspicious.",
+          "Check whether the email landed in your main inbox rather than your spam folder."
+        ],
+        correct: 1,
+        explanation: "Hovering reveals the real destination URL before you click. If it doesn't match an official Rossari Biotech domain (@rossari.com), treat it as suspicious and report it."
+      }
+    ];
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION B: CONSTANTS & STATE
+    ───────────────────────────────────────────────────────────────── */
+    const PASS_THRESHOLD = 7;   // Must score ≥ 7 / 10 to pass
+    let userAnswers = {};       // { questionId: selectedOptionIndex }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION C: DOM REFERENCES
+    ───────────────────────────────────────────────────────────────── */
+    const screens = {
+      landing : document.getElementById("screen-landing"),
+      quiz    : document.getElementById("screen-quiz"),
+      results : document.getElementById("screen-results")
+    };
+
+    const progressFill       = document.getElementById("quiz-progress-fill");
+    const progressText       = document.getElementById("progress-text");
+    const progressBarAria    = document.getElementById("quiz-progress-bar-aria");
+    const questionsContainer = document.getElementById("quiz-questions-container");
+    const scoreRing          = document.getElementById("score-ring");
+    const scoreDisplay       = document.getElementById("score-display");
+    const scoreVerdict       = document.getElementById("score-verdict");
+    const scoreSubtitle      = document.getElementById("score-subtitle");
+    const benchmarkFill      = document.getElementById("benchmark-fill");
+    const answerReviewList   = document.getElementById("answer-review-list");
+    const footerYear         = document.getElementById("footer-year");
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION D: SCREEN STATE MACHINE
+       showScreen() is the only function that controls visibility.
+       It hides all screens, then reveals the requested one.
+    ───────────────────────────────────────────────────────────────── */
+    function showScreen(name) {
+      Object.values(screens).forEach(el => el.classList.add("hidden"));
+      const target = screens[name];
+      if (target) {
+        target.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION E: QUIZ RENDERING
+       Builds all question HTML from QUIZ_DATA dynamically.
+       To change questions, edit QUIZ_DATA only — not the HTML.
+    ───────────────────────────────────────────────────────────────── */
+    function renderQuiz() {
+      userAnswers = {};
+      questionsContainer.innerHTML = "";
+
+      QUIZ_DATA.forEach((q, index) => {
+        const block = document.createElement("div");
+        block.classList.add("question-block");
+        block.dataset.questionId = q.id;
+
+        let optionsHTML = "";
+        q.options.forEach((opt, optIndex) => {
+          optionsHTML += `
+            <label class="option-label">
+              <input
+                type="radio"
+                name="q${q.id}"
+                value="${optIndex}"
+                aria-label="Option ${optIndex + 1}: ${opt}"
+              />
+              ${opt}
+            </label>
+          `;
+        });
+
+        block.innerHTML = `
+          <div class="question-num">${q.category} · Question ${index + 1} of ${QUIZ_DATA.length}</div>
+          <div class="question-text">${q.question}</div>
+          <div class="options-list" role="radiogroup" aria-label="Answer options for question ${index + 1}">
+            ${optionsHTML}
+          </div>
+        `;
+
+        questionsContainer.appendChild(block);
+      });
+
+      attachAnswerListeners();
+      updateProgressBar();
+    }
+
+    /* Attach change listeners to track selections and update progress */
+    function attachAnswerListeners() {
+      questionsContainer.querySelectorAll("input[type='radio']").forEach(radio => {
+        radio.addEventListener("change", (e) => {
+          const qId = parseInt(e.target.name.replace("q", ""), 10);
+          userAnswers[qId] = parseInt(e.target.value, 10);
+          updateProgressBar();
+        });
+      });
+    }
+
+    /* Update the scanner-style progress bar */
+    function updateProgressBar() {
+      const answered = Object.keys(userAnswers).length;
+      const total    = QUIZ_DATA.length;
+      const pct      = (answered / total) * 100;
+
+      progressFill.style.width = pct + "%";
+      progressText.textContent = `${answered} of ${total} answered`;
+      progressBarAria.setAttribute("aria-valuenow", answered);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION F: SCORE CALCULATION
+    ───────────────────────────────────────────────────────────────── */
+    function calculateScore() {
+      let correct = 0;
+      QUIZ_DATA.forEach(q => {
+        if (userAnswers[q.id] === q.correct) correct++;
+      });
+      return correct;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION G: RESULTS RENDERING
+       Populates the results screen with the actual numeric score,
+       pass/fail verdict, scoreboard bar, and per-question review.
+    ───────────────────────────────────────────────────────────────── */
+    function renderResults() {
+      const score  = calculateScore();
+      const total  = QUIZ_DATA.length;
+      const passed = score >= PASS_THRESHOLD;
+      const pct    = Math.round((score / total) * 100);
+
+      /* ── Score ring: show actual number e.g. "7" with "out of 10" below ── */
+      scoreDisplay.textContent = `${score}`;
+      document.getElementById("score-out-of").textContent = `out of ${total}`;
+      scoreRing.classList.remove("pass", "fail");
+      scoreRing.classList.add(passed ? "pass" : "fail");
+
+      /* ── Verdict: large PASSED / NOT PASSED text ── */
+      scoreVerdict.textContent = passed ? "✅ PASSED" : "❌ NOT PASSED";
+      scoreVerdict.className   = "score-verdict " + (passed ? "pass" : "fail");
+
+      /* ── Subtitle with percentage ── */
+      scoreSubtitle.textContent = passed
+        ? `You scored ${score}/10 (${pct}%) — well done! You have met the ${PASS_THRESHOLD * 10}% pass mark.`
+        : `You scored ${score}/10 (${pct}%). The pass mark is ${PASS_THRESHOLD}/10 (${PASS_THRESHOLD * 10}%). Review the answer explanations below and retake the quiz.`;
+
+      /* ── Animate the benchmark bar ── */
+      setTimeout(() => { benchmarkFill.style.width = pct + "%"; }, 250);
+
+      /* ── Per-question answer review ── */
+      answerReviewList.innerHTML = "";
+      QUIZ_DATA.forEach((q, index) => {
+        const userAns     = userAnswers[q.id];
+        const isCorrect   = userAns === q.correct;
+        const userText    = (userAns !== undefined) ? q.options[userAns] : "Not answered";
+        const correctText = q.options[q.correct];
+
+        const row = document.createElement("div");
+        row.classList.add("answer-row", isCorrect ? "correct" : "incorrect");
+        row.innerHTML = `
+          <div class="q-text">
+            ${isCorrect ? "✅" : "❌"} Q${index + 1}. ${q.question}
+          </div>
+          <div class="q-meta">
+            <strong>Your answer:</strong> ${userText}
+            ${!isCorrect ? `&nbsp;·&nbsp;<span class="correct-ans">✔ Correct answer: ${correctText}</span>` : ""}
+          </div>
+          <div class="q-explain">${q.explanation}</div>
+        `;
+        answerReviewList.appendChild(row);
+      });
+
+      /* ── Analytics hook ── */
+      submitScoreToDashboard({ score, total, passed, pct });
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION H: EMPLOYEE IDENTITY + ANALYTICS
+
+       HOW IT WORKS
+       ─────────────
+       Each phishing email contains a unique link, e.g.:
+         https://yoursite.vercel.app/?emp=John%20Doe&dept=Finance&eid=EMP042
+
+       Parameters:
+         emp   = employee full name   (e.g. "John Doe")
+         dept  = department           (e.g. "Finance")
+         eid   = employee ID / code   (e.g. "EMP042")
+
+       The page reads these on load, shows a personalised banner,
+       and includes them in every analytics event + Google Sheets row.
+
+       GOOGLE SHEETS SETUP
+       ─────────────────────
+       1. Create a Google Sheet with these columns in Row 1:
+          Timestamp | Name | Department | Employee ID | Score | Total | Pct | Passed | Link Clicked At
+
+       2. In the Sheet, go to Extensions → Apps Script and paste:
+          (see companion file: google-apps-script.gs)
+
+       3. Deploy as Web App → Execute as "Me" → Anyone can access.
+          Copy the deployment URL and paste it into SHEETS_WEBHOOK_URL below.
+
+       VERCEL ANALYTICS
+       ──────────────────
+       Enable in: Vercel Dashboard → your project → Analytics → Enable
+    ───────────────────────────────────────────────────────────────── */
+
+    // ── STEP 1: Supabase config ──
+    const SUPABASE_URL = "https://abwehpdhmfcnopbpkpmh.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFid2VocGRobWZjbm9wYnBrcG1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMDI2MzQsImV4cCI6MjA5Nzc3ODYzNH0.Fo39HLAvz7J8-c_XYwO4pqJDw7tIA72HzfVXS9dK1VU";
+
+    // Login-captured identity
+    let empNameFromLogin  = "";
+    let empEmailFromLogin = "";
+
+    // ── STEP 2: Read URL parameters ──
+    const urlParams     = new URLSearchParams(window.location.search);
+    const empName       = urlParams.get("emp")   || "";
+    const empDept       = urlParams.get("dept")  || "";
+    const empId         = urlParams.get("eid")   || "";
+    const empEmail      = urlParams.get("email") || "";
+    const linkClickedAt = new Date().toISOString();
+
+    // ── STEP 3: Show employee banner on the landing screen ──
+    (function renderEmpBanner() {
+      const banner = document.getElementById("emp-banner");
+      if (!banner) return;
+
+      if (empName) {
+        const initials = empName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+        banner.innerHTML = `
+          <div class="emp-avatar" aria-hidden="true">${initials}</div>
+          <div class="emp-info">
+            <strong>${empName}</strong>
+            <span>${empEmail || (empDept ? empDept + (empId ? " · ID: " + empId : "") : "Rossari Biotech")}</span>
+          </div>
+        `;
+        banner.classList.remove("hidden");
+      } else {
+        // Unknown visitor — still show a banner so IT knows to check
+        banner.classList.add("unknown");
+        banner.innerHTML = `
+          <div class="emp-avatar" style="background:var(--orange)" aria-hidden="true">?</div>
+          <div class="emp-info">
+            <strong>Unknown Employee</strong>
+            <span>Link opened without employee parameters — forwarded link?</span>
+          </div>
+        `;
+        banner.classList.remove("hidden");
+      }
+    })();
+
+    // ── STEP 4: Vercel Analytics helper ──
+    function trackEvent(name, data = {}) {
+      if (typeof window.va === "function") {
+        window.va("event", { name, data });
+      }
+      console.log(`[Rossari Analytics] ${name}`, data);
+    }
+
+    // ── STEP 5: Submit result to Google Sheets + Vercel Analytics ──
+    function submitScoreToDashboard(result) {
+      const payload = {
+        timestamp      : new Date().toISOString(),
+        name           : empNameFromLogin  || empName  || "Unknown",
+        email          : empEmailFromLogin || empEmail || "Unknown",
+        department     : empDept     || "Unknown",
+        employee_id    : empId       || "Unknown",
+        score          : result.score,
+        total          : result.total,
+        pct            : result.pct,
+        passed         : result.passed ? "Yes" : "No",
+        linkClickedAt  : linkClickedAt
+      };
+
+      // ── Vercel Analytics custom event ──
+      trackEvent("quiz_completed", {
+        name   : payload.name,
+        dept   : payload.department,
+        score  : payload.score,
+        passed : payload.passed,
+        pct    : payload.pct
+      });
+
+      // ── Supabase insert ──
+      fetch(`${SUPABASE_URL}/rest/v1/quiz_results`, {
+        method : "POST",
+        headers: {
+          "Content-Type"  : "application/json",
+          "apikey"        : SUPABASE_KEY,
+          "Authorization" : `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+          timestamp       : payload.timestamp,
+          name            : payload.name,
+          email           : payload.email,
+          department      : payload.department,
+          employee_id     : payload.employeeId,
+          score           : payload.score,
+          total           : payload.total,
+          pct             : payload.pct,
+          passed          : payload.passed,
+          link_clicked_at : payload.linkClickedAt
+        })
+      }).catch(err => console.error("[Rossari] Supabase error:", err));
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION I: SUBMIT LOGIC
+       Validates all questions are answered, then shows results.
+    ───────────────────────────────────────────────────────────────── */
+    function handleSubmit() {
+      const unanswered = QUIZ_DATA.filter(q => userAnswers[q.id] === undefined);
+
+      if (unanswered.length > 0) {
+        const firstBlock = questionsContainer.querySelector(
+          `[data-question-id="${unanswered[0].id}"]`
+        );
+        if (firstBlock) {
+          firstBlock.scrollIntoView({ behavior: "smooth", block: "center" });
+          firstBlock.style.outline = "3px solid var(--orange)";
+          setTimeout(() => { firstBlock.style.outline = ""; }, 2200);
+        }
+        alert(`Please answer all questions before submitting.\nYou still have ${unanswered.length} unanswered question(s).`);
+        return;
+      }
+
+      renderResults();
+      showScreen("results");
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION J: EVENT LISTENERS
+    ───────────────────────────────────────────────────────────────── */
+    document.getElementById("btn-start-quiz").addEventListener("click", () => {
+      trackEvent("quiz_started", { company: "Rossari Biotech" });
+      renderQuiz();
+      showScreen("quiz");
+    });
+
+    document.getElementById("btn-submit-quiz").addEventListener("click", handleSubmit);
+
+    document.getElementById("btn-retake").addEventListener("click", () => {
+      trackEvent("quiz_retaken", { company: "Rossari Biotech" });
+      renderQuiz();
+      showScreen("quiz");
+    });
+
+    document.getElementById("btn-back-landing").addEventListener("click", () => {
+      showScreen("landing");
+    });
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTION K: INIT
+    ───────────────────────────────────────────────────────────────── */
+    // ── LOGIN SCREEN LOGIC ──
+    document.getElementById("btn-login").addEventListener("click", () => {
+      const nameInput  = document.getElementById("login-name");
+      const emailInput = document.getElementById("login-email");
+      const errName    = document.getElementById("err-name");
+      const errEmail   = document.getElementById("err-email");
+
+      let valid = true;
+
+      // Validate name
+      if (!nameInput.value.trim()) {
+        nameInput.classList.add("error");
+        errName.style.display = "block";
+        valid = false;
+      } else {
+        nameInput.classList.remove("error");
+        errName.style.display = "none";
+      }
+
+      // Validate email
+      const emailVal = emailInput.value.trim();
+      if (!emailVal || !emailVal.includes("@")) {
+        emailInput.classList.add("error");
+        errEmail.style.display = "block";
+        valid = false;
+      } else {
+        emailInput.classList.remove("error");
+        errEmail.style.display = "none";
+      }
+
+      if (!valid) return;
+
+      // Store for use in quiz submission
+      empNameFromLogin  = nameInput.value.trim();
+      empEmailFromLogin = emailInput.value.trim();
+
+      // Log to Supabase — they fell for it!
+      fetch(`${SUPABASE_URL}/rest/v1/link_clicks`, {
+        method : "POST",
+        headers: {
+          "Content-Type"  : "application/json",
+          "apikey"        : SUPABASE_KEY,
+          "Authorization" : `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+          timestamp : new Date().toISOString(),
+          name      : empNameFromLogin,
+          email     : empEmailFromLogin
+        })
+      }).catch(err => console.error("[Rossari] Login log error:", err));
+
+      trackEvent("portal_login_submitted", { email: empEmailFromLogin });
+
+      // Show the real training content
+      document.getElementById("screen-login").style.display = "none";
+      document.querySelector(".site-header").style.display  = "";
+      document.querySelector("main").style.display          = "";
+      showScreen("landing");
+    });
+
+    footerYear.textContent = new Date().getFullYear();
+
+    // Start on login screen — hide header and main until login complete
+    document.querySelector(".site-header").style.display = "none";
+    document.querySelector("main").style.display         = "none";
+    document.getElementById("screen-login").style.display = "flex";
+
+  }); // end DOMContentLoaded
+  </script>
+</body>
+</html>
