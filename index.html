@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rossari Employee Portal</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f0f0f0;min-height:100vh;}
+
+    /* ── PAGES ── */
+    .page{display:none;min-height:100vh;}
+    .page.active{display:block;}
+
+    /* ── LOGIN PAGE ── */
+    #page-login{display:flex;align-items:center;justify-content:center;padding:20px;}
+    .login-box{background:#fff;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.15);width:100%;max-width:420px;overflow:hidden;}
+    .login-top{background:#7B1416;padding:28px 32px;text-align:center;}
+    .login-top .logo{font-size:30px;font-weight:900;color:#fff;letter-spacing:3px;font-family:Georgia,serif;}
+    .login-top .logo span{color:#ffbbbb;}
+    .login-top .tagline{color:#ffaaaa;font-size:11px;letter-spacing:1px;margin-top:4px;}
+    .login-badge{background:#5a0f11;color:#ffcccc;font-size:11px;letter-spacing:1px;text-transform:uppercase;text-align:center;padding:7px;}
+    .login-body{padding:32px;}
+    .login-body h2{font-size:17px;font-weight:700;color:#222;margin-bottom:6px;}
+    .login-body p{font-size:13px;color:#888;margin-bottom:22px;}
+    .secure-note{display:flex;align-items:center;gap:8px;background:#f8f8f8;border:1px solid #eee;border-radius:5px;padding:10px 12px;font-size:12px;color:#666;margin-bottom:20px;}
+    .field{margin-bottom:16px;}
+    .field label{display:block;font-size:11px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+    .field input{width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:5px;font-size:14px;outline:none;transition:border-color 0.2s;}
+    .field input:focus{border-color:#7B1416;}
+    .field input.err{border-color:#e53e3e;}
+    .errmsg{color:#e53e3e;font-size:12px;margin-top:4px;display:none;}
+    .login-btn{width:100%;padding:13px;background:#7B1416;color:#fff;border:none;border-radius:5px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;transition:background 0.2s;}
+    .login-btn:hover{background:#5a0f11;}
+    .login-foot{border-top:1px solid #f0f0f0;padding:14px 32px;font-size:11px;color:#aaa;text-align:center;}
+
+    /* ── TRAINING PAGE ── */
+    #page-training{background:#eef2f7;}
+    .topbar{background:#0B1F3A;color:#fff;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .topbar .brand{display:flex;align-items:center;gap:12px;}
+    .topbar .mark{width:40px;height:40px;border-radius:8px;background:#E8630A;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;}
+    .topbar .name{font-size:16px;font-weight:700;}
+    .topbar .sub{font-size:11px;color:#8AAACB;text-transform:uppercase;letter-spacing:0.04em;}
+    .topbar .badge{background:#E8630A;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:0.07em;}
+    .wrap{max-width:820px;margin:0 auto;padding:32px 16px 60px;}
+    .card{background:#fff;border:1px solid #C8D5E4;border-radius:12px;box-shadow:0 4px 20px rgba(11,31,58,0.1);padding:32px;margin-bottom:22px;}
+    .card h2{font-size:20px;font-weight:700;color:#0B1F3A;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+    .alert-banner{background:#0B1F3A;color:#fff;border-radius:12px;padding:30px 32px;margin-bottom:22px;}
+    .alert-banner .eyebrow{font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#E8630A;margin-bottom:8px;}
+    .alert-banner h1{font-size:clamp(22px,4vw,30px);font-weight:800;margin-bottom:12px;}
+    .alert-banner p{font-size:16px;color:#9BBBD6;line-height:1.7;}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+    .email-box{border-radius:10px;padding:16px 18px;}
+    .email-box.real{background:#E6F4ED;border:2px solid #14703F;}
+    .email-box.fake{background:#FDECEA;border:2px solid #B52B20;}
+    .email-box .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
+    .email-box.real .lbl{color:#14703F;}
+    .email-box.fake .lbl{color:#B52B20;}
+    .email-box .addr{font-family:monospace;font-size:14px;font-weight:600;color:#0F1E30;}
+    .email-box .note{font-size:12px;color:#4A5E72;margin-top:5px;}
+    .flags{list-style:none;display:flex;flex-direction:column;gap:12px;}
+    .flags li{display:flex;gap:14px;background:#FFF5F0;border:1px solid #F5C0A0;border-left:5px solid #E8630A;border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;}
+    .flags li .ico{font-size:20px;flex-shrink:0;margin-top:2px;}
+    .flags li strong{display:block;color:#E8630A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;}
+    .roles{list-style:none;display:flex;flex-direction:column;gap:12px;}
+    .roles li{display:flex;gap:14px;background:#F0F6FF;border:1px solid #C5D9F0;border-left:5px solid #0B1F3A;border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;}
+    .roles li .ico{font-size:20px;flex-shrink:0;margin-top:2px;}
+    .roles li strong{display:block;color:#0B1F3A;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
+    .cta-card{background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(11,31,58,0.1);padding:36px;margin-bottom:22px;text-align:center;}
+    .cta-card p{font-size:18px;font-weight:700;color:#0B1F3A;margin-bottom:8px;}
+    .cta-card small{font-size:14px;color:#4A5E72;display:block;margin-bottom:22px;}
+    .btn-main{display:inline-block;background:#E8630A;color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:17px;font-weight:700;cursor:pointer;transition:background 0.2s;}
+    .btn-main:hover{background:#C4510A;}
+
+    /* ── QUIZ PAGE ── */
+    #page-quiz{background:#eef2f7;}
+    .prog-wrap{background:#EEF2F7;border:1px solid #C8D5E4;border-radius:30px;height:12px;overflow:hidden;margin-bottom:6px;}
+    .prog-fill{height:100%;background:linear-gradient(90deg,#0B1F3A,#E8630A);border-radius:30px;width:0%;transition:width 0.4s;}
+    .prog-label{font-size:14px;color:#4A5E72;font-weight:600;text-align:right;margin-bottom:24px;}
+    .qblock{margin-bottom:26px;padding-bottom:26px;border-bottom:1px solid #C8D5E4;}
+    .qblock:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+    .qnum{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:#E8630A;margin-bottom:6px;}
+    .qtext{font-size:17px;font-weight:600;color:#0B1F3A;line-height:1.5;margin-bottom:14px;}
+    .opts{display:flex;flex-direction:column;gap:9px;}
+    .opt{display:flex;align-items:flex-start;gap:12px;background:#EEF2F7;border:2px solid #C8D5E4;border-radius:10px;padding:13px 16px;cursor:pointer;font-size:15px;color:#0F1E30;transition:border-color 0.2s,background 0.2s;line-height:1.5;}
+    .opt:hover{border-color:#0B1F3A;background:#E5EDF6;}
+    .opt input[type=radio]{accent-color:#0B1F3A;width:17px;height:17px;flex-shrink:0;margin-top:2px;}
+    .opt.selected{border-color:#0B1F3A;background:#D8E8F5;}
+    .quiz-foot{display:flex;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid #C8D5E4;}
+
+    /* ── RESULTS PAGE ── */
+    #page-results{background:#eef2f7;}
+    .score-hero{text-align:center;padding:28px 20px 20px;}
+    .ring{width:140px;height:140px;border-radius:50%;border:10px solid #C8D5E4;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;}
+    .ring.pass{border-color:#14703F;}
+    .ring.fail{border-color:#B52B20;}
+    .ring .num{font-size:38px;font-weight:800;line-height:1;color:#0B1F3A;}
+    .ring.pass .num{color:#14703F;}
+    .ring.fail .num{color:#B52B20;}
+    .ring .lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#4A5E72;}
+    .verdict{font-size:22px;font-weight:800;margin-bottom:6px;}
+    .verdict.pass{color:#14703F;}
+    .verdict.fail{color:#B52B20;}
+    .sub{font-size:15px;color:#4A5E72;max-width:440px;margin:0 auto;line-height:1.6;}
+    .review{display:flex;flex-direction:column;gap:11px;}
+    .arow{border-radius:10px;padding:14px 16px;font-size:14px;border-left:5px solid transparent;line-height:1.6;}
+    .arow.ok{background:#E6F4ED;border-left-color:#14703F;}
+    .arow.bad{background:#FDECEA;border-left-color:#B52B20;}
+    .arow .qt{font-weight:700;color:#0B1F3A;margin-bottom:4px;}
+    .arow .qm{font-size:12px;color:#4A5E72;}
+    .arow .qe{font-size:12px;color:#4A5E72;margin-top:5px;font-style:italic;}
+    .btn-sec{display:inline-block;background:transparent;color:#0B1F3A;border:2px solid #0B1F3A;border-radius:10px;padding:11px 24px;font-size:15px;font-weight:600;cursor:pointer;transition:background 0.2s;}
+    .btn-sec:hover{background:#EEF2F7;}
+    .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+
+    @media(max-width:600px){
+      .two-col{grid-template-columns:1fr;}
+      .card{padding:20px 16px;}
+      .topbar .badge{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ LOGIN PAGE ═══════════ -->
+<div id="page-login" class="page active" style="display:flex;">
+  <div class="login-box">
+    <div class="login-top">
+      <div class="logo">ROSS<span>ARI</span></div>
+      <div class="tagline">making you more competitive</div>
+    </div>
+    <div class="login-badge">🔒 Employee Self-Service Portal</div>
+    <div class="login-body">
+      <h2>Sign in to your account</h2>
+      <p>Use your Rossari employee credentials to access HR services.</p>
+      <div class="secure-note">🛡️ Secure connection — your information is encrypted</div>
+      <div class="field">
+        <label for="inp-name">Full Name</label>
+        <input type="text" id="inp-name" placeholder="e.g. Allison Suvarna" autocomplete="name"/>
+        <div class="errmsg" id="e-name">Please enter your full name</div>
+      </div>
+      <div class="field">
+        <label for="inp-email">Work Email Address</label>
+        <input type="email" id="inp-email" placeholder="e.g. allison.suvarna@rossari.com" autocomplete="email"/>
+        <div class="errmsg" id="e-email">Please enter your work email</div>
+      </div>
+      <button class="login-btn" onclick="doLogin()">Sign In →</button>
+    </div>
+    <div class="login-foot">© 2026 Rossari Biotech Ltd. · Corporate HR Portal · IT Helpdesk: it-helpdesk@rossari.com</div>
+  </div>
+</div>
+
+<!-- ═══════════ TRAINING PAGE ═══════════ -->
+<div id="page-training" class="page">
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">RB</div>
+      <div>
+        <div class="name">Rossari Biotech</div>
+        <div class="sub">Information Security</div>
+      </div>
+    </div>
+    <div class="badge">Security Awareness Training</div>
+  </div>
+  <div class="wrap">
+
+    <div class="alert-banner">
+      <div class="eyebrow">🔔 Phishing Simulation — Rossari Biotech IT Security</div>
+      <h1>You received a simulated phishing email.</h1>
+      <p>This was a controlled security test run by the Rossari Biotech IT team. No real harm has been done — this is your opportunity to learn how to identify and report real phishing threats.</p>
+    </div>
+
+    <div class="card">
+      <h2>📬 Real vs. Fake: Spot the Difference</h2>
+      <div class="two-col">
+        <div class="email-box real">
+          <div class="lbl">✅ Legitimate HR Email</div>
+          <div class="addr">corphr@rossari.com</div>
+          <div class="note">Official Rossari Biotech domain — always ends in @rossari.com</div>
+        </div>
+        <div class="email-box fake">
+          <div class="lbl">❌ Phishing Email (Fake)</div>
+          <div class="addr">corphr@gmail.com</div>
+          <div class="note">A free Gmail address — Rossari HR will <strong>never</strong> contact you from Gmail</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🚩 Red Flags in That Email</h2>
+      <ul class="flags">
+        <li><span class="ico">⚠️</span><div><strong>Fake Sender Domain</strong>The email came from corphr@gmail.com — a free public Gmail account. Rossari HR exclusively uses @rossari.com addresses.</div></li>
+        <li><span class="ico">⚠️</span><div><strong>Urgency &amp; Pressure Tactics</strong>The message created artificial urgency ("complete by close of business today"). This is a classic manipulation technique to stop you from thinking critically.</div></li>
+        <li><span class="ico">⚠️</span><div><strong>Request to Click a Suspicious Link</strong>Legitimate Rossari HR systems will never ask you to verify your identity by clicking an unsolicited email link.</div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>🛡️ Your Role in Staying Safe</h2>
+      <ul class="roles">
+        <li><span class="ico">👁️</span><div><strong>Stay Vigilant</strong>Remain alert at all times and look for signs of suspicious activity in emails and digital communications.</div></li>
+        <li><span class="ico">🔍</span><div><strong>Verify Before You Click</strong>Hover over links to check the real destination URL and confirm the sender's full email address matches an official @rossari.com domain.</div></li>
+        <li><span class="ico">📣</span><div><strong>Report Suspicious Activity</strong>If you notice anything unusual, report it to IT immediately at it-helpdesk@rossari.com — do not wait.</div></li>
+        <li><span class="ico">🔑</span><div><strong>Enable MFA</strong>Multi-Factor Authentication means an attacker who steals your password still cannot log in without your second factor. Enable it on all business systems.</div></li>
+      </ul>
+    </div>
+
+    <div class="cta-card">
+      <p>Ready to test your knowledge?</p>
+      <small>Complete the 10-question quiz. You need 7 or more correct answers to pass (70%).</small>
+      <button class="btn-main" onclick="startQuiz()">Start 10-Question Quiz →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════ QUIZ PAGE ═══════════ -->
+<div id="page-quiz" class="page">
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">RB</div>
+      <div>
+        <div class="name">Rossari Biotech</div>
+        <div class="sub">Information Security</div>
+      </div>
+    </div>
+    <div class="badge">Security Quiz</div>
+  </div>
+  <div class="wrap">
+    <div class="card">
+      <h2>🧠 Security Awareness Quiz</h2>
+      <div class="prog-wrap"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="prog-label" id="prog-label">0 of 10 answered</div>
+      <div id="quiz-container"></div>
+      <div class="quiz-foot">
+        <button class="btn-main" onclick="submitQuiz()">Submit Quiz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ RESULTS PAGE ═══════════ -->
+<div id="page-results" class="page">
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">RB</div>
+      <div>
+        <div class="name">Rossari Biotech</div>
+        <div class="sub">Information Security</div>
+      </div>
+    </div>
+    <div class="badge">Your Results</div>
+  </div>
+  <div class="wrap">
+    <div class="card">
+      <div class="score-hero">
+        <div class="ring" id="score-ring">
+          <div class="num" id="score-num">-</div>
+          <div class="lbl">out of 10</div>
+        </div>
+        <div class="verdict" id="verdict"></div>
+        <div class="sub" id="verdict-sub"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📋 Your Answer Review</h2>
+      <div class="review" id="review-list"></div>
+    </div>
+    <div class="card">
+      <h2>💡 Key Takeaways</h2>
+      <ul class="flags">
+        <li><span class="ico">🔗</span><div><strong>Hover before you click</strong>Always hover over links to preview the destination URL. If the domain looks unfamiliar, do not click it.</div></li>
+        <li><span class="ico">📧</span><div><strong>Verify the sender's full email address</strong>Display names are trivially spoofed. Rossari Biotech communications only come from @rossari.com addresses.</div></li>
+        <li><span class="ico">🔑</span><div><strong>Enable MFA on all business applications</strong>Even if your password is compromised, MFA provides a critical second layer of defence.</div></li>
+        <li><span class="ico">📣</span><div><strong>Report — don't just delete</strong>Reporting helps IT block the sender for everyone. Forward suspicious emails to it-helpdesk@rossari.com.</div></li>
+        <li><span class="ico">⏸️</span><div><strong>Pause under pressure</strong>Any email demanding urgency is trying to bypass your critical thinking. Slow down and verify before acting.</div></li>
+      </ul>
+      <div style="margin-top:20px;padding-top:18px;border-top:1px solid #C8D5E4;font-size:14px;color:#4A5E72;">
+        📄 Read the full <a href="https://www.rossari.com/wp-content/uploads/2026/04/Information-Security-Policy-V2.pdf" target="_blank" style="color:#0B1F3A;font-weight:700;">Rossari Biotech Information Security Policy ↗</a>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-sec" onclick="retake()">↩ Retake Quiz</button>
+      <button class="btn-sec" onclick="showPage('page-training')">← Back to Overview</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG ──
+  var SUPABASE_URL = "https://abwehpdhmfcnopbpkpmh.supabase.co";
+  var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFid2VocGRobWZjbm9wYnBrcG1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMDI2MzQsImV4cCI6MjA5Nzc3ODYzNH0.Fo39HLAvz7J8-c_XYwO4pqJDw7tIA72HzfVXS9dK1VU";
+
+  // ── STATE ──
+  var userName = "", userEmail = "";
+  var answers = {};
+
+  // ── QUIZ DATA ──
+  var QUIZ = [
+    {id:1,cat:"Phishing Awareness",q:"You receive an email from 'corphr@gmail.com' offering you a company bonus. Rossari Biotech's official HR email is corphr@rossari.com. What should you do?",opts:["Click the link to find out more about the bonus.","Report the email to IT at it-helpdesk@rossari.com and delete it.","Reply to the sender asking if the email is genuine.","Forward it to colleagues to see if they received it too."],ans:1,exp:"Rossari Biotech HR uses @rossari.com — never a free Gmail address. Report it to IT immediately and do not engage."},
+    {id:2,cat:"Phishing Awareness",q:"Which is the strongest sign that an email is a phishing attempt?",opts:["The email uses your first name and job title.","The email contains the Rossari Biotech logo.","The email creates extreme urgency and asks you to click a link to 'verify your account immediately'.","The email arrived on a Saturday morning."],ans:2,exp:"Artificial urgency + a suspicious link is the hallmark of phishing. Logos and names are trivially copied by attackers."},
+    {id:3,cat:"Phishing Awareness",q:"What is 'spear phishing'?",opts:["A phishing attack sent to thousands of random people at once.","A highly targeted phishing attack using personal details to appear credible to a specific victim.","Phishing carried out over a phone call.","An attack that only targets senior management."],ans:1,exp:"Spear phishing is personalised. Attackers research victims via LinkedIn and social media to craft convincing, targeted messages."},
+    {id:4,cat:"Password Security",q:"Which password strategy is most secure for a corporate environment?",opts:["Using one strong password across all work systems so it's easier to remember.","A unique, randomly generated password for each account, stored in an approved company password manager.","A short password with special characters like 'P@ss1!'","Writing passwords in a notebook locked in your desk drawer."],ans:1,exp:"Password reuse is extremely dangerous. If one system is compromised, all accounts sharing that password are at risk."},
+    {id:5,cat:"Password Security",q:"A colleague urgently asks for your Rossari Biotech login password to complete a critical task while you are on leave. What should you do?",opts:["Share it via WhatsApp — it's a trusted colleague.","Write it down and leave it in a sealed envelope on their desk.","Refuse. Sharing corporate credentials is a violation of the Information Security Policy regardless of the reason.","Email it to them from your personal email as a workaround."],ans:2,exp:"Sharing your credentials is always a policy violation. IT can grant temporary access through proper, auditable channels."},
+    {id:6,cat:"Password Security",q:"What is Multi-Factor Authentication (MFA)?",opts:["Having multiple different passwords for the same account.","A security process requiring two or more verification methods — such as a password plus a one-time code sent to your phone.","Software that checks whether your password meets complexity requirements.","Logging into the same account from multiple devices at the same time."],ans:1,exp:"MFA means an attacker who steals your password still cannot log in without your second factor. Always enable MFA on every business system."},
+    {id:7,cat:"Social Engineering",q:"You receive a call from someone claiming to be from Rossari Biotech IT Support. They ask you to read out a one-time code that just appeared on your phone. What should you do?",opts:["Read it out — IT support staff are trusted employees.","Hang up immediately, do not share the code, and call it-helpdesk@rossari.com on the official number to verify.","Ask them to send an email request first.","Ask your manager for permission before responding."],ans:1,exp:"This is a real-time MFA bypass attack. Legitimate IT staff will NEVER ask for your one-time code. Hang up and verify through official channels."},
+    {id:8,cat:"Social Engineering",q:"What is 'pretexting' in the context of a cyber attack?",opts:["Sending a malicious text (SMS) message with a dangerous link.","Creating a fabricated, believable scenario to manipulate someone into sharing sensitive information or performing an action.","Using pre-written email templates to launch phishing attacks at scale.","An attack that happens before a scheduled security audit."],ans:1,exp:"Pretexting is inventing a convincing story — e.g. 'I'm from IT, we need your credentials urgently to prevent a server outage.'"},
+    {id:9,cat:"Reporting & Safe Behaviour",q:"You receive a suspicious email but you are not 100% certain it's a phishing attempt. What is the correct action?",opts:["Open the link in a private browsing window to check if it looks legitimate.","Delete it without reporting so IT does not get flooded with minor queries.","Use the 'Report Phishing' button in your email client, or forward it to it-helpdesk@rossari.com for IT to investigate safely.","Reply to the sender asking if the email is genuine."],ans:2,exp:"When in doubt, report it. IT Security can safely analyse the email without putting you or the company at risk."},
+    {id:10,cat:"Reporting & Safe Behaviour",q:"Before clicking a link in any email, what is the safest verification step you can take?",opts:["Check whether the email looks professionally designed and branded.","Hover over the link with your mouse cursor to preview the destination URL in the browser's status bar.","Click quickly and close the tab immediately if the page looks suspicious.","Check whether the email landed in your main inbox rather than your spam folder."],ans:1,exp:"Hovering reveals the real destination URL before you click. If it doesn't match an official Rossari Biotech domain (@rossari.com), treat it as suspicious."}
+  ];
+
+  // ── PAGES ──
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.style.display='none'; });
+    document.getElementById(id).style.display = 'block';
+    window.scrollTo(0,0);
+  }
+
+  // ── LOGIN ──
+  function doLogin() {
+    var n = document.getElementById('inp-name');
+    var e = document.getElementById('inp-email');
+    var ok = true;
+
+    if (!n.value.trim()) {
+      n.classList.add('err');
+      document.getElementById('e-name').style.display='block';
+      ok = false;
+    } else {
+      n.classList.remove('err');
+      document.getElementById('e-name').style.display='none';
+    }
+    if (!e.value.trim() || e.value.indexOf('@') < 0) {
+      e.classList.add('err');
+      document.getElementById('e-email').style.display='block';
+      ok = false;
+    } else {
+      e.classList.remove('err');
+      document.getElementById('e-email').style.display='none';
+    }
+    if (!ok) return;
+
+    userName  = n.value.trim();
+    userEmail = e.value.trim();
+
+    // Log to Supabase
+    sendToSupabase('link_clicks', { timestamp: now(), name: userName, email: userEmail });
+
+    showPage('page-training');
+  }
+
+  // ── QUIZ ──
+  function startQuiz() {
+    answers = {};
+    buildQuiz();
+    showPage('page-quiz');
+  }
+
+  function buildQuiz() {
+    var c = document.getElementById('quiz-container');
+    c.innerHTML = '';
+    QUIZ.forEach(function(q, i) {
+      var opts = q.opts.map(function(o, oi) {
+        return '<label class="opt" id="opt-'+q.id+'-'+oi+'">' +
+          '<input type="radio" name="q'+q.id+'" value="'+oi+'" onchange="pickAns('+q.id+','+oi+')">' +
+          o + '</label>';
+      }).join('');
+      c.innerHTML += '<div class="qblock">' +
+        '<div class="qnum">'+q.cat+' · Question '+(i+1)+' of '+QUIZ.length+'</div>' +
+        '<div class="qtext">'+q.q+'</div>' +
+        '<div class="opts">'+opts+'</div>' +
+        '</div>';
+    });
+    updateProg();
+  }
+
+  function pickAns(qid, oi) {
+    answers[qid] = oi;
+    // Highlight selected
+    QUIZ.forEach(function(q){
+      if (q.id === qid) {
+        q.opts.forEach(function(_, i){
+          var el = document.getElementById('opt-'+qid+'-'+i);
+          if (el) el.classList.toggle('selected', i === oi);
+        });
+      }
+    });
+    updateProg();
+  }
+
+  function updateProg() {
+    var done = Object.keys(answers).length;
+    var pct  = (done / QUIZ.length) * 100;
+    document.getElementById('prog-fill').style.width  = pct + '%';
+    document.getElementById('prog-label').textContent = done + ' of ' + QUIZ.length + ' answered';
+  }
+
+  function submitQuiz() {
+    var unanswered = QUIZ.filter(function(q){ return answers[q.id] === undefined; });
+    if (unanswered.length > 0) {
+      alert('Please answer all ' + QUIZ.length + ' questions before submitting. (' + unanswered.length + ' remaining)');
+      return;
+    }
+    showResults();
+  }
+
+  function showResults() {
+    var score = 0;
+    QUIZ.forEach(function(q){ if (answers[q.id] === q.ans) score++; });
+    var pct    = Math.round((score / QUIZ.length) * 100);
+    var passed = score >= 7;
+
+    // Ring
+    var ring = document.getElementById('score-ring');
+    ring.className = 'ring ' + (passed ? 'pass' : 'fail');
+    document.getElementById('score-num').textContent = score;
+
+    // Verdict
+    var v = document.getElementById('verdict');
+    v.className = 'verdict ' + (passed ? 'pass' : 'fail');
+    v.textContent = passed ? '✅ Passed — Well Done!' : '❌ Not Passed — Try Again';
+    document.getElementById('verdict-sub').textContent = passed
+      ? 'You scored ' + score + '/10 (' + pct + '%). You have demonstrated a solid understanding of cyber security awareness.'
+      : 'You scored ' + score + '/10 (' + pct + '%). Review the training material and retake the quiz to achieve 70% or above.';
+
+    // Review
+    var rl = document.getElementById('review-list');
+    rl.innerHTML = '';
+    QUIZ.forEach(function(q) {
+      var correct = answers[q.id] === q.ans;
+      rl.innerHTML += '<div class="arow '+(correct?'ok':'bad')+'">' +
+        '<div class="qt">'+q.q+'</div>' +
+        '<div class="qm">Your answer: <strong>'+q.opts[answers[q.id]]+'</strong>' +
+        (!correct ? ' &nbsp;|&nbsp; <span style="color:#14703F;font-weight:700;">Correct: '+q.opts[q.ans]+'</span>' : '') +
+        '</div>' +
+        '<div class="qe">'+q.exp+'</div>' +
+        '</div>';
+    });
+
+    // Save to Supabase
+    sendToSupabase('quiz_results', {
+      timestamp : now(),
+      name      : userName,
+      email     : userEmail,
+      score     : score,
+      total     : QUIZ.length,
+      passed    : passed ? 'Yes' : 'No'
+    });
+
+    showPage('page-results');
+  }
+
+  function retake() {
+    startQuiz();
+  }
+
+  // ── SUPABASE ──
+  function sendToSupabase(table, data) {
+    fetch(SUPABASE_URL + '/rest/v1/' + table, {
+      method  : 'POST',
+      headers : {
+        'Content-Type'  : 'application/json',
+        'apikey'        : SUPABASE_KEY,
+        'Authorization' : 'Bearer ' + SUPABASE_KEY
+      },
+      body: JSON.stringify(data)
+    }).catch(function(e){ console.warn('Supabase error:', e); });
+  }
+
+  function now() { return new Date().toISOString(); }
+</script>
+</body>
+</html>
